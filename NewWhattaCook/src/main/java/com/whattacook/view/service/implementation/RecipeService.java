@@ -1,13 +1,14 @@
 package com.whattacook.view.service.implementation;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.whattacook.model.recipe.Recipe;
 import com.whattacook.view.service.RecipeDetailService;
+
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class RecipeService implements RecipeDetailService {
@@ -16,86 +17,77 @@ public class RecipeService implements RecipeDetailService {
 	private RecipeComponent component;
 
 	@Override
-	public ResponseEntity<List<Recipe>> showAllRecipes() {
+	public Flux<Recipe> showAllRecipes() {
 		
-		ResponseEntity<List<Recipe>> response = ResponseEntity.noContent().build();
+		Flux<Recipe> response = Flux.empty();
 		
 		try {
 			
-			List<Recipe> listRecipe = component.findAllRecipe();
-			
-			response = ResponseEntity.ok(listRecipe);
+			response = component.findAllRecipe();
 			
 		} catch (Exception e) {
-			response = ResponseEntity.badRequest().header("Error", e.getMessage()).build();
+			response = Flux.error(e);
 		}
 		
 		return response;
 	}
 
 	@Override
-	public ResponseEntity<Recipe> showRecipeById(Long id) {
+	public Mono<ResponseEntity<Recipe>> showRecipeById(Long id) {
 
-		ResponseEntity<Recipe> response = ResponseEntity.noContent().build();
+		Mono<ResponseEntity<Recipe>> response = Mono.empty();
 		
 		try {
 			
 			
-			response = ResponseEntity.of(null);
-			
 		} catch (Exception e) {
-			response = ResponseEntity.badRequest().header("Error", e.getMessage()).build();
+			response = Mono.error(e);
 		}
 		
 		return response;
 	}
 
 	@Override
-	public ResponseEntity<Recipe> saveNewRecipe(Recipe recipe) {
+	public Mono<ResponseEntity<Recipe>> saveNewRecipe(Recipe recipe) {
 
-		ResponseEntity<Recipe> response = ResponseEntity.noContent().build();
+		Mono<ResponseEntity<Recipe>> response = Mono.empty();
 		
 		try {
 			
 			
-			response = ResponseEntity.of(null);
-			
 		} catch (Exception e) {
-			response = ResponseEntity.badRequest().header("Error", e.getMessage()).build();
+			response = Mono.error(e);
 		}
 		
 		return response;
 	}
 	
 	@Override
-	public ResponseEntity<Recipe> modifyRecipe(Recipe recipe) {
-		
-		ResponseEntity<Recipe> response = ResponseEntity.noContent().build();
+	public Mono<ResponseEntity<Recipe>> modifyRecipe(Recipe recipe) {
+
+		Mono<ResponseEntity<Recipe>> response = Mono.empty();
 		
 		try {
 			
 			
-			response = ResponseEntity.of(null);
-			
 		} catch (Exception e) {
-			response = ResponseEntity.badRequest().header("Error", e.getMessage()).build();
+			response = Mono.error(e);
 		}
 		
 		return response;
 	}
 
 	@Override
-	public ResponseEntity<Void> deleteRecipe(Long id) {
+	public Mono<ResponseEntity<Void>> deleteRecipe(Long id) {
 
-		ResponseEntity<Void> response = ResponseEntity.noContent().build();
+
+		Mono<ResponseEntity<Void>> response = Mono.empty();
 		
 		try {
 			
 			
-			response = ResponseEntity.ok().build();
-			
 		} catch (Exception e) {
-			response = ResponseEntity.badRequest().header("Error", e.getMessage()).build();
+			response = Mono.error(e);
 		}
 		
 		return response;

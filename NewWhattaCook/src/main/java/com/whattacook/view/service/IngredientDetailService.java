@@ -6,25 +6,29 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 
 import com.whattacook.model.ingredient.Ingredient;
+import com.whattacook.model.ingredient.IngredientJson;
+
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface IngredientDetailService {
 
 	//GET all
-	public ResponseEntity<List<Ingredient>> showAllIngredients();
+	public Flux<Ingredient> showAllIngredients();
 	
 	//GET by id
-	public ResponseEntity<Ingredient> showIngredientById(Long id);
+	public Mono<ResponseEntity<Ingredient>> showIngredientById(String id);
 	
 	//POST
-	public ResponseEntity<Ingredient> saveNewIngredient(Ingredient ingredient);
+	public Mono<ResponseEntity<Ingredient>> saveNewIngredient(IngredientJson ingredient);
 	
 	//PUT
-	public ResponseEntity<Ingredient> modifyNameIngredient(Ingredient ingredient);
+	public Mono<ResponseEntity<Ingredient>> modifyNameIngredient(IngredientJson ingredient);
 	
 	//DELETE
-	public ResponseEntity<Void> deleteIngredient(Long id);
+	public Mono<ResponseEntity<Void>> deleteIngredient(String id);
 
 	//Returns HashMap with recipe id & times that is repeated
-	ResponseEntity<HashMap<Integer, Object>> recipeCounter(List<String> listIngredientId);
+	Flux<ResponseEntity<HashMap<Integer, Object>>> recipeCounter(List<String> listIngredientId);
 
 }

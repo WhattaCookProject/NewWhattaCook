@@ -8,7 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.whattacook.model.ingredient.Ingredient;
+import com.whattacook.model.ingredient.IngredientJson;
 import com.whattacook.view.service.IngredientDetailService;
+
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class IngredientService implements IngredientDetailService {
@@ -17,103 +21,98 @@ public class IngredientService implements IngredientDetailService {
 	private IngredientComponent component;
 
 	@Override
-	public ResponseEntity<List<Ingredient>> showAllIngredients() {
+	public Flux<Ingredient> showAllIngredients() {
 
-		ResponseEntity<List<Ingredient>> response = ResponseEntity.noContent().build();
+		Flux<Ingredient> response = Flux.empty();
 		
 		try {
 			
-			List<Ingredient> listRecipe = component.findAllIngredients();
-			
-			response = ResponseEntity.ok(listRecipe);
+			response = component.findAllIngredients();
 			
 		} catch (Exception e) {
-			response = ResponseEntity.badRequest().header("Error", e.getMessage()).build();
+			response = Flux.error(e);
 		}
 		
 		return response;
 	}
 
 	@Override
-	public ResponseEntity<Ingredient> showIngredientById(Long id) {
+	public Mono<ResponseEntity<Ingredient>> showIngredientById(String id) {
 
-		ResponseEntity<Ingredient> response = ResponseEntity.noContent().build();
+		Mono<ResponseEntity<Ingredient>> response = Mono.empty();
 		
 		try {
 			
-			
-			response = ResponseEntity.of(null);
+			response = component.findIngredientById(id);
 			
 		} catch (Exception e) {
-			response = ResponseEntity.badRequest().header("Error", e.getMessage()).build();
+			response = Mono.error(e);
 		}
 		
 		return response;
 	}
 
 	@Override
-	public ResponseEntity<Ingredient> saveNewIngredient(Ingredient ingredient) {
+	public Mono<ResponseEntity<Ingredient>> saveNewIngredient(IngredientJson ingredient) {
 
-		ResponseEntity<Ingredient> response = ResponseEntity.noContent().build();
+		Mono<ResponseEntity<Ingredient>> response = Mono.empty();
 		
 		try {
 			
 			
-			response = ResponseEntity.of(null);
 			
 		} catch (Exception e) {
-			response = ResponseEntity.badRequest().header("Error", e.getMessage()).build();
+			response = Mono.error(e);
 		}
 		
 		return response;
 	}
 
 	@Override
-	public ResponseEntity<Ingredient> modifyNameIngredient(Ingredient ingredient) {
+	public Mono<ResponseEntity<Ingredient>> modifyNameIngredient(IngredientJson ingredient) {
 
-		ResponseEntity<Ingredient> response = ResponseEntity.noContent().build();
+
+		Mono<ResponseEntity<Ingredient>> response = Mono.empty();
 		
 		try {
 			
 			
-			response = ResponseEntity.of(null);
 			
 		} catch (Exception e) {
-			response = ResponseEntity.badRequest().header("Error", e.getMessage()).build();
+			response = Mono.error(e);
 		}
 		
 		return response;
 	}
 
 	@Override
-	public ResponseEntity<Void> deleteIngredient(Long id) {
+	public Mono<ResponseEntity<Void>> deleteIngredient(String id) {
 
-		ResponseEntity<Void> response = ResponseEntity.noContent().build();
+
+		Mono<ResponseEntity<Void>> response = Mono.empty();
 		
 		try {
 			
 			
-			response = ResponseEntity.ok().build();
 			
 		} catch (Exception e) {
-			response = ResponseEntity.badRequest().header("Error", e.getMessage()).build();
+			response = Mono.error(e);
 		}
 		
 		return response;
 	}
 
 	@Override
-	public ResponseEntity<HashMap<Integer, Object>> recipeCounter(List<String> listIngredientId) {
+	public Flux<ResponseEntity<HashMap<Integer, Object>>> recipeCounter(List<String> listIngredientId) {
 
-		ResponseEntity<HashMap<Integer, Object>> response = ResponseEntity.noContent().build();
+		Flux<ResponseEntity<HashMap<Integer, Object>>> response = Flux.empty();
 		
 		try {
 			
 			
-			response = ResponseEntity.of(null);
 			
 		} catch (Exception e) {
-			response = ResponseEntity.badRequest().header("Error", e.getMessage()).build();
+			response = Flux.error(e);
 		}
 		
 		return response;
