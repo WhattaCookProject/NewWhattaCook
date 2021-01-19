@@ -15,6 +15,9 @@ import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import com.whattacook.util.exceptions.IngredientExceptions;
+import com.whattacook.util.exceptions.RecipeExceptions;
+
 @EnableWebMvc
 @RestControllerAdvice
 public class ControllerAdvice extends DefaultResponseErrorHandler {
@@ -31,6 +34,20 @@ public class ControllerAdvice extends DefaultResponseErrorHandler {
 	@ResponseBody
 	public String invalidRequest() {
 		return "[BAD REQUEST . 400] -> Invalid or incorrect resquisition!!!";
+	}
+	
+	@ExceptionHandler(IngredientExceptions.class)
+	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+	@ResponseBody
+	public String ingredientRequest() {
+		return "Sorry, there's nothing to cook";
+	}
+	
+	@ExceptionHandler(RecipeExceptions.class)
+	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+	@ResponseBody
+	public String recipeRequest() {
+		return "Sorry, we believe that the recipes are being prepared";
 	}
 
 	@ExceptionHandler({ EmptyResultDataAccessException.class, NoSuchElementException.class })
