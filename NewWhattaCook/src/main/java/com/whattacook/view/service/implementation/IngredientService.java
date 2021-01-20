@@ -53,12 +53,13 @@ public class IngredientService implements IngredientDetailService {
 	}
 
 	@Override
-	public Mono<ResponseEntity<Ingredient>> saveNewIngredient(IngredientJson ingredient) {
+	public Mono<ResponseEntity<Ingredient>> saveNewIngredient(IngredientJson newIngredientJson) {
 
 		Mono<ResponseEntity<Ingredient>> response = Mono.empty();
 		
 		try {
-			
+			IngredientJson ingredientToSave = component.saveNewIngredient(newIngredientJson);
+
 			
 			
 		} catch (Exception e) {
