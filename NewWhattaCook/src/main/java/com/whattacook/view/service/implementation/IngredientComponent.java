@@ -32,10 +32,12 @@ class IngredientComponent {
 				.defaultIfEmpty(ResponseEntity.notFound().build());
 	}
 
-	public IngredientJson saveNewIngredient(IngredientJson newIngredientJson) {
-		Ingredient ingredientToSave = newIngredientJson.toIngredient();
-		Ingredient ingredientSaved = manager.save(ingredientToSave);
-		return ingredientSaved.toJson();
+	public Mono<ResponseEntity<IngredientJson>> saveNewIngredient(IngredientJson newIngredientJson) {
+		return Mono.just(newIngredientJson)
+				.map(IngredientJson::toIngredient) 
+				.flatMap(x -> manager.save(x))
+				.map(Ingredient::toJson)
+				.map(ResponseEntity::ok);
 	}
 	
 }

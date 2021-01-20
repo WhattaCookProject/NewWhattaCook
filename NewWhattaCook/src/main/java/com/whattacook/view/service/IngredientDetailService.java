@@ -20,7 +20,7 @@ public interface IngredientDetailService {
 	public Mono<ResponseEntity<Ingredient>> showIngredientById(String id);
 	
 	//POST
-	public Mono<ResponseEntity<Ingredient>> saveNewIngredient(IngredientJson ingredient);
+	public Mono<ResponseEntity<IngredientJson>> saveNewIngredient(IngredientJson ingredient);
 	
 	//PUT
 	public Mono<ResponseEntity<Ingredient>> modifyNameIngredient(IngredientJson ingredient);

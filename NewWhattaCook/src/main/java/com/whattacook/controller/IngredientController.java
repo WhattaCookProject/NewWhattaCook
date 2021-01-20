@@ -43,7 +43,7 @@ public class IngredientController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Mono<ResponseEntity<Ingredient>> saveNewIngredient(@RequestBody IngredientJson ingredient) {
+	public Mono<ResponseEntity<IngredientJson>> saveNewIngredient(@RequestBody IngredientJson ingredient) {
 		return service.saveNewIngredient(ingredient);
 	}
 	
