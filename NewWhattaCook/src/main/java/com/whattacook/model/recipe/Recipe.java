@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.whattacook.model.ingredient.Ingredient;
 
-@Document(collection = "ingredient")
+@Document(collection = "recipe")
 public class Recipe {
 
 	@Id
