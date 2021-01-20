@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import com.whattacook.model.ingredient.Ingredient;
+import com.whattacook.model.ingredient.IngredientJson;
 import com.whattacook.model.ingredient.IngredientManager;
 import com.whattacook.util.exceptions.IngredientExceptions;
 
@@ -21,7 +22,7 @@ class IngredientComponent {
 
 	Flux<Ingredient> findAllIngredients() throws IngredientExceptions {
 		return manager.findAll()
-				.switchIfEmpty(Flux.error(throwsUp("Sorry, there's nothing to cook")));
+				.switchIfEmpty(Flux.error(throwsUp("Sorry, there's no ingredients")));
 				
 	}
 
@@ -31,4 +32,10 @@ class IngredientComponent {
 				.defaultIfEmpty(ResponseEntity.notFound().build());
 	}
 
+	public IngredientJson saveNewIngredient(IngredientJson newIngredientJson) {
+		Ingredient ingredientToSave = newIngredientJson.toIngredient();
+		Ingredient ingredientSaved = manager.save(ingredientToSave);
+		return ingredientSaved.toJson();
+	}
+	
 }
