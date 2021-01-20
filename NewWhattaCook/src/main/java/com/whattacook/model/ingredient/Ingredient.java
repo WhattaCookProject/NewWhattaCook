@@ -25,6 +25,11 @@ public class Ingredient {
 		this.name = name;
 		this.recipeIds = recipeIds;
 	}
+	
+	
+	public IngredientJson toJson() {
+		return IngredientJson.from(this);
+	}
 
 	public String getId() {
 		return id;
