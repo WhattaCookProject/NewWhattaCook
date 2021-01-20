@@ -1,5 +1,6 @@
 package com.whattacook.model.ingredient;
 
+
 public class IngredientJson {
 	
 	private String id;
@@ -9,12 +10,26 @@ public class IngredientJson {
 	public IngredientJson() {
 	}
 
-	public IngredientJson(String id, String name) {
-		this.id = id;
-		this.name = name;
+	public IngredientJson(Ingredient ingredient) {
+		this.id = ingredient.getId();
+		this.name = ingredient.getName();
 	}
 
 	
+	public static IngredientJson from(Ingredient ingredient) {
+		return new IngredientJson(ingredient);
+	}
+
+	public Ingredient toIngredient() {
+		
+		Ingredient ingredient = new Ingredient();
+		
+		ingredient.setId(id);
+		ingredient.setName(name);
+		return ingredient;
+	}
+	
+
 	public String getId() {
 		return id;
 	}
