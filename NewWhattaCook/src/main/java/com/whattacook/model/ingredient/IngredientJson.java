@@ -14,6 +14,7 @@ public class IngredientJson {
 		this.name = name;
 	}
 
+	
 	public String getId() {
 		return id;
 	}
@@ -30,6 +31,4 @@ public class IngredientJson {
 		this.name = name;
 	}
 	
-		
-
 }
