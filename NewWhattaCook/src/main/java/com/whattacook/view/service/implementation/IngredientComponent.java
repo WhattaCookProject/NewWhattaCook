@@ -21,9 +21,9 @@ class IngredientComponent {
 	private IngredientManager manager;
 
 	Flux<IngredientJson> findAllIngredients() throws IngredientExceptions {
-		return manager.findAll()
+		return Flux.from(manager.findAll())
 				.map(Ingredient::toJson)
-				.switchIfEmpty(Flux.error(throwsUp("Sorry, there's no ingredients")));
+				.defaultIfEmpty(IngredientJson.error("Sorry, there's nothing to cook"));
 				
 	}
 
