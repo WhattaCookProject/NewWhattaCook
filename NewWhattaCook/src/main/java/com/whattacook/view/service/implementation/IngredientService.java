@@ -1,5 +1,7 @@
 package com.whattacook.view.service.implementation;
 
+import static com.whattacook.util.exceptions.IngredientExceptions.throwsUp;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,7 +32,7 @@ public class IngredientService implements IngredientDetailService {
 			response = component.findAllIngredients();
 			
 		} catch (Exception e) {
-			response = Flux.error(e);
+			response = Flux.empty();
 		}
 		
 		return response;
@@ -43,10 +45,12 @@ public class IngredientService implements IngredientDetailService {
 		
 		try {
 			
+			throwsUp("Sorry, there's no ingredients");
 			response = component.findIngredientById(id);
 			
 		} catch (Exception e) {
-			response = Mono.error(e);
+			response = Mono.just(ResponseEntity.status(303)
+					.header("ERROR", e.getMessage()).build());
 		}
 		
 		return response;
@@ -62,7 +66,8 @@ public class IngredientService implements IngredientDetailService {
 			response = component.saveNewIngredient(newIngredientJson);
 
 		} catch (Exception e) {
-			response = Mono.empty();
+			response = Mono.just(ResponseEntity.status(303)
+					.header("ERROR", e.getMessage()).build());
 		}
 		
 		return response;
@@ -79,7 +84,8 @@ public class IngredientService implements IngredientDetailService {
 			
 			
 		} catch (Exception e) {
-			response = Mono.error(e);
+			response = Mono.just(ResponseEntity.status(303)
+					.header("ERROR", e.getMessage()).build());
 		}
 		
 		return response;
@@ -96,7 +102,8 @@ public class IngredientService implements IngredientDetailService {
 			
 			
 		} catch (Exception e) {
-			response = Mono.error(e);
+			response = Mono.just(ResponseEntity.status(303)
+					.header("ERROR", e.getMessage()).build());
 		}
 		
 		return response;
@@ -112,7 +119,8 @@ public class IngredientService implements IngredientDetailService {
 			
 			
 		} catch (Exception e) {
-			response = Flux.error(e);
+			response = Flux.just(ResponseEntity.status(303)
+					.header("ERROR", e.getMessage()).build());
 		}
 		
 		return response;
