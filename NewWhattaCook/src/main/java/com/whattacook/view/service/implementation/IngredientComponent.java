@@ -22,20 +22,24 @@ class IngredientComponent {
 
 	Flux<IngredientJson> findAllIngredients() throws IngredientExceptions {
 		return manager.findAll()
+				.map(Ingredient::toJson)
 				.switchIfEmpty(Flux.error(throwsUp("Sorry, there's no ingredients")));
 				
 	}
 
-		return manager.findById(id)
-				.map(i -> ResponseEntity.ok(i))
-				.defaultIfEmpty(ResponseEntity.notFound().build());
 	Mono<ResponseEntity<IngredientJson>> findIngredientById(String id) {
+		return  Mono.just(id)
+				.flatMap(manager::findById)
+				.map(Ingredient::toJson)
+				.map(ResponseEntity::ok)
+				.defaultIfEmpty(ResponseEntity.noContent()
+						.header("ERROR", "Ingredient not founded!").build());
 	}
 
 	Mono<ResponseEntity<IngredientJson>> saveNewIngredient(IngredientJson newIngredientJson) {
 		return Mono.just(newIngredientJson)
 				.map(IngredientJson::toIngredient) 
-				.flatMap(x -> manager.save(x))
+				.flatMap(manager::save)
 				.map(Ingredient::toJson)
 				.map(ResponseEntity::ok);
 	}

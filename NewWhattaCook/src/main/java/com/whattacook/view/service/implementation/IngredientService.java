@@ -1,7 +1,5 @@
 package com.whattacook.view.service.implementation;
 
-import static com.whattacook.util.exceptions.IngredientExceptions.throwsUp;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,29 +21,28 @@ public class IngredientService implements IngredientDetailService {
 	private IngredientComponent component;
 
 	@Override
-	public Flux<Ingredient> showAllIngredients() {
+	public Flux<IngredientJson> showAllIngredients() {
 
-		Flux<Ingredient> response = Flux.empty();
+		Flux<IngredientJson> response = Flux.empty();
 		
 		try {
-			
+
 			response = component.findAllIngredients();
 			
 		} catch (Exception e) {
-			response = Flux.empty();
+			response = Flux.just(IngredientJson.error(e.getMessage()));
 		}
 		
 		return response;
 	}
 
 	@Override
-	public Mono<ResponseEntity<Ingredient>> showIngredientById(String id) {
+	public Mono<ResponseEntity<IngredientJson>> showIngredientById(String id) {
 
-		Mono<ResponseEntity<Ingredient>> response = Mono.empty();
+		Mono<ResponseEntity<IngredientJson>> response = Mono.empty();
 		
 		try {
 			
-			throwsUp("Sorry, there's no ingredients");
 			response = component.findIngredientById(id);
 			
 		} catch (Exception e) {
