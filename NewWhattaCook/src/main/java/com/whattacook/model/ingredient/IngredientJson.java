@@ -10,11 +10,20 @@ public class IngredientJson {
 	public IngredientJson() {
 	}
 
-	public IngredientJson(Ingredient ingredient) {
+	private IngredientJson(String id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+
+	protected IngredientJson(Ingredient ingredient) {
 		this.id = ingredient.getId();
 		this.name = ingredient.getName();
 	}
 
+	
+	public static IngredientJson error(String error) {
+		return new IngredientJson("ERROR", error);
+	}
 	
 	public static IngredientJson from(Ingredient ingredient) {
 		return new IngredientJson(ingredient);
