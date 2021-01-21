@@ -14,10 +14,10 @@ import reactor.core.publisher.Mono;
 public interface IngredientDetailService {
 
 	//GET all
-	public Flux<Ingredient> showAllIngredients();
+	public Flux<IngredientJson> showAllIngredients();
 	
 	//GET by id
-	public Mono<ResponseEntity<Ingredient>> showIngredientById(String id);
+	public Mono<ResponseEntity<IngredientJson>> showIngredientById(String id);
 	
 	//POST
 	public Mono<ResponseEntity<IngredientJson>> saveNewIngredient(IngredientJson ingredient);

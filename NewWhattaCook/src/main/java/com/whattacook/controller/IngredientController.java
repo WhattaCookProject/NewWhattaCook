@@ -31,13 +31,13 @@ public class IngredientController {
 	
 	@GetMapping("/all")
 	@ResponseStatus(HttpStatus.OK)
-	public Flux<Ingredient> showAllIngredients() {
+	public Flux<IngredientJson> showAllIngredients() {
 		return service.showAllIngredients();
 	}
 	
 	@GetMapping()
 	@ResponseStatus(HttpStatus.OK)
-	public Mono<ResponseEntity<Ingredient>> showIngredientById(@RequestBody @NonNull String id) {
+	public Mono<ResponseEntity<IngredientJson>> showIngredientById(@RequestBody @NonNull String id) {
 		return service.showIngredientById(id);
 	}
 	

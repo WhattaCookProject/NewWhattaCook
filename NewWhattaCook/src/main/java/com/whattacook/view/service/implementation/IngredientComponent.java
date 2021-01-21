@@ -20,19 +20,19 @@ class IngredientComponent {
 	@Autowired
 	private IngredientManager manager;
 
-	Flux<Ingredient> findAllIngredients() throws IngredientExceptions {
+	Flux<IngredientJson> findAllIngredients() throws IngredientExceptions {
 		return manager.findAll()
 				.switchIfEmpty(Flux.error(throwsUp("Sorry, there's no ingredients")));
 				
 	}
 
-	Mono<ResponseEntity<Ingredient>> findIngredientById(String id) {
 		return manager.findById(id)
 				.map(i -> ResponseEntity.ok(i))
 				.defaultIfEmpty(ResponseEntity.notFound().build());
+	Mono<ResponseEntity<IngredientJson>> findIngredientById(String id) {
 	}
 
-	public Mono<ResponseEntity<IngredientJson>> saveNewIngredient(IngredientJson newIngredientJson) {
+	Mono<ResponseEntity<IngredientJson>> saveNewIngredient(IngredientJson newIngredientJson) {
 		return Mono.just(newIngredientJson)
 				.map(IngredientJson::toIngredient) 
 				.flatMap(x -> manager.save(x))
