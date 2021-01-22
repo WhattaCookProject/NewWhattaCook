@@ -101,7 +101,7 @@ public class IngredientService implements IngredientDetailService {
 		
 		try {
 			
-			
+			response = component.deleteIngredient(id);
 			
 		} catch (Exception e) {
 			response = Mono.just(ResponseEntity.status(303)
