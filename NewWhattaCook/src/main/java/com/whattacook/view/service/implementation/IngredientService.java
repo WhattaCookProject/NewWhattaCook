@@ -60,7 +60,12 @@ public class IngredientService implements IngredientDetailService {
 		
 		try {
 			
+			IngredientJsonToSaveValidation.verifyIsAble(newIngredientJson);
+			
 			response = component.saveNewIngredient(newIngredientJson);
+			
+//			response = success("Ingredient successfully created", saved);
+		
 
 		} catch (Exception e) {
 			response = Mono.just(ResponseEntity.status(303)
