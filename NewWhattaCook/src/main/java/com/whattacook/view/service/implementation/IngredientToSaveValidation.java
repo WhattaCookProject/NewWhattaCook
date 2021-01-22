@@ -1,6 +1,7 @@
 package com.whattacook.view.service.implementation;
 
 import static com.whattacook.util.Valid.isNullOrEmpty;
+import static com.whattacook.util.Valid.notNullOrEmpty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +29,15 @@ class IngredientToSaveValidation {
 	}
 
 	private boolean notHaveAllNeededToBeCreated() {
-		return isNullOrEmpty(ingredientJson.getName());
+		return isNullOrEmpty(ingredientJson.getName()) || notNullOrEmpty(ingredientJson.getId());
 	}
 
 	private Throwable throwExceptionWithEspecificFlawsOfThis() {
 
 		List<String> message = new ArrayList<>();
+		
+		if (notNullOrEmpty(ingredientJson.getId()))
+			message.add("Must not have ID!");
 
 		if (isNullOrEmpty(ingredientJson.getName()))
 			message.add("Missing Name!");
