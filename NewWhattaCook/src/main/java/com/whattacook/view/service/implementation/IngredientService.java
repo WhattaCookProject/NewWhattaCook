@@ -21,48 +21,50 @@ public class IngredientService implements IngredientDetailService {
 	private IngredientComponent component;
 
 	@Override
-	public Flux<Ingredient> showAllIngredients() {
+	public Flux<IngredientJson> showAllIngredients() {
 
-		Flux<Ingredient> response = Flux.empty();
+		Flux<IngredientJson> response = Flux.empty();
 		
 		try {
-			
+
 			response = component.findAllIngredients();
 			
 		} catch (Exception e) {
-			response = Flux.error(e);
+			response = Flux.just(IngredientJson.error(e.getMessage()));
 		}
 		
 		return response;
 	}
 
 	@Override
-	public Mono<ResponseEntity<Ingredient>> showIngredientById(String id) {
+	public Mono<ResponseEntity<IngredientJson>> showIngredientById(String id) {
 
-		Mono<ResponseEntity<Ingredient>> response = Mono.empty();
+		Mono<ResponseEntity<IngredientJson>> response = Mono.empty();
 		
 		try {
 			
 			response = component.findIngredientById(id);
 			
 		} catch (Exception e) {
-			response = Mono.error(e);
+			response = Mono.just(ResponseEntity.status(303)
+					.header("ERROR", e.getMessage()).build());
 		}
 		
 		return response;
 	}
 
 	@Override
-	public Mono<ResponseEntity<Ingredient>> saveNewIngredient(IngredientJson ingredient) {
+	public Mono<ResponseEntity<IngredientJson>> saveNewIngredient(IngredientJson newIngredientJson) {
 
-		Mono<ResponseEntity<Ingredient>> response = Mono.empty();
+		Mono<ResponseEntity<IngredientJson>> response = Mono.empty();
 		
 		try {
 			
-			
-			
+			response = component.saveNewIngredient(newIngredientJson);
+
 		} catch (Exception e) {
-			response = Mono.error(e);
+			response = Mono.just(ResponseEntity.status(303)
+					.header("ERROR", e.getMessage()).build());
 		}
 		
 		return response;
@@ -79,7 +81,8 @@ public class IngredientService implements IngredientDetailService {
 			
 			
 		} catch (Exception e) {
-			response = Mono.error(e);
+			response = Mono.just(ResponseEntity.status(303)
+					.header("ERROR", e.getMessage()).build());
 		}
 		
 		return response;
@@ -96,7 +99,8 @@ public class IngredientService implements IngredientDetailService {
 			
 			
 		} catch (Exception e) {
-			response = Mono.error(e);
+			response = Mono.just(ResponseEntity.status(303)
+					.header("ERROR", e.getMessage()).build());
 		}
 		
 		return response;
@@ -112,7 +116,8 @@ public class IngredientService implements IngredientDetailService {
 			
 			
 		} catch (Exception e) {
-			response = Flux.error(e);
+			response = Flux.just(ResponseEntity.status(303)
+					.header("ERROR", e.getMessage()).build());
 		}
 		
 		return response;

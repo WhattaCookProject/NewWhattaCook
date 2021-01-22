@@ -40,7 +40,7 @@ public class ControllerAdvice extends DefaultResponseErrorHandler {
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 	@ResponseBody
 	public String ingredientRequest() {
-		return "Sorry, there's nothing to cook";
+		return "Sorry, someone forgot the shopping list in the fridge";
 	}
 	
 	@ExceptionHandler(RecipeExceptions.class)

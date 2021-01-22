@@ -1,13 +1,9 @@
 package com.whattacook.model.ingredient;
 
 import java.util.Objects;
-import java.util.Set;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import com.whattacook.model.recipe.Recipe;
 
 @Document(collection = "ingredient")
 public class Ingredient {
@@ -15,15 +11,17 @@ public class Ingredient {
 	@Id
 	private String id;
 	private String name;
-	@DBRef
-	private Set<Recipe> recipeIds;
 	
 	public Ingredient() {}
 
-	public Ingredient(String id, String name, Set<Recipe> recipeIds) {
+	public Ingredient(String id, String name) {
 		this.id = id;
 		this.name = name;
-		this.recipeIds = recipeIds;
+	}
+	
+	
+	public IngredientJson toJson() {
+		return IngredientJson.from(this);
 	}
 
 	public String getId() {
@@ -42,17 +40,9 @@ public class Ingredient {
 		this.name = name;
 	}
 
-	public Set<Recipe> getRecipeIds() {
-		return recipeIds;
-	}
-
-	public void setRecipeIds(Set<Recipe> recipeIds) {
-		this.recipeIds = recipeIds;
-	}
-
 	@Override
 	public String toString() {
-		return String.format("Ingredient : {id : %s, name : %s, recipeIds : %s}", id, name, recipeIds);
+		return String.format("Ingredient : {id : %s, name : %s}", id, name);
 	}
 
 	@Override
