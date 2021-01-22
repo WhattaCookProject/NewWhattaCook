@@ -1,5 +1,7 @@
 package com.whattacook.view.service.implementation;
 
+import static com.whattacook.util.exceptions.IngredientExceptions.throwsUp;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,11 +38,21 @@ class IngredientComponent {
 	}
 
 	Mono<ResponseEntity<IngredientJson>> saveNewIngredient(IngredientJson newIngredientJson) {
+		ifNameIsAlredyRegisteredThrowsException(newIngredientJson);
 		return Mono.just(newIngredientJson)
 				.map(IngredientJson::toIngredient) 
 				.flatMap(manager::save)
 				.map(Ingredient::toJson)
 				.map(ResponseEntity::ok);
+	}
+
+	private void ifNameIsAlredyRegisteredThrowsException(IngredientJson newIngredientJson) {
+		if (nameIsAlredyRegistered(newIngredientJson))
+			throwsUp("This Ingredient is already registered!");
+	}
+	
+	private boolean nameIsAlredyRegistered(IngredientJson newIngredientJson) {
+		return manager.existsByNameIgnoreCase(newIngredientJson.getName()).block();
 	}
 
 	Mono<ResponseEntity<Void>> deleteIngredient(String id) {
