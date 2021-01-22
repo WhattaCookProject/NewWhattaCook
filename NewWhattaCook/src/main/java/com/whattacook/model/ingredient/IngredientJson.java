@@ -1,12 +1,13 @@
 package com.whattacook.model.ingredient;
 
+import static com.whattacook.util.TitleCase.all;
+import static com.whattacook.util.Valid.notNullOrEmpty;
 
 public class IngredientJson {
-	
+
 	private String id;
 	private String name;
-	
-	
+
 	public IngredientJson() {
 	}
 
@@ -20,24 +21,25 @@ public class IngredientJson {
 		this.name = ingredient.getName();
 	}
 
-	
 	public static IngredientJson error(String error) {
 		return new IngredientJson("ERROR", error);
 	}
-	
+
 	public static IngredientJson from(Ingredient ingredient) {
 		return new IngredientJson(ingredient);
 	}
 
 	public Ingredient toIngredient() {
-		
+
 		Ingredient ingredient = new Ingredient();
-		
-		ingredient.setId(id);
-		ingredient.setName(name);
+
+		ingredient.setName(all(name));
+
+		if (notNullOrEmpty(ingredient.getId()))
+			ingredient.setId(id);
+
 		return ingredient;
 	}
-	
 
 	public String getId() {
 		return id;
@@ -54,5 +56,5 @@ public class IngredientJson {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 }
