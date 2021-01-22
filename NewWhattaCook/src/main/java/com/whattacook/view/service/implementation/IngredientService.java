@@ -64,9 +64,6 @@ public class IngredientService implements IngredientDetailService {
 			
 			response = component.saveNewIngredient(newIngredientJson);
 			
-//			response = success("Ingredient successfully created", saved);
-		
-
 		} catch (Exception e) {
 			response = Mono.just(ResponseEntity.status(303)
 					.header("ERROR", e.getMessage()).build());
