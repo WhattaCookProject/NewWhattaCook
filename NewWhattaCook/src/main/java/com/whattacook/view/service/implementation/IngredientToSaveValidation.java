@@ -8,7 +8,7 @@ import java.util.List;
 import com.whattacook.model.ingredient.IngredientJson;
 import com.whattacook.util.exceptions.IngredientExceptions;
 
-public class IngredientJsonToSaveValidation {
+class IngredientToSaveValidation {
 
 	static void verifyIsAble(IngredientJson ingredientJson) throws IngredientExceptions {
 
@@ -18,8 +18,8 @@ public class IngredientJsonToSaveValidation {
 	
 	////// PRIVATE METHODS //////	////// PRIVATE METHODS //////	////// PRIVATE METHODS //////
 
-	private static IngredientJsonToSaveValidation valid(IngredientJson ingredientJson) {
-		return new IngredientJsonToSaveValidation(ingredientJson);
+	private static IngredientToSaveValidation valid(IngredientJson ingredientJson) {
+		return new IngredientToSaveValidation(ingredientJson);
 	}
 
 	private void ifNotHaveAllNeededToBeCreatedThrowException() throws IngredientExceptions {
@@ -41,7 +41,7 @@ public class IngredientJsonToSaveValidation {
 		return IngredientExceptions.throwsUp(String.join(" ", message));
 	}
 	
-	private IngredientJsonToSaveValidation(IngredientJson ingredientJson) {
+	private IngredientToSaveValidation(IngredientJson ingredientJson) {
 		this.ingredientJson = ingredientJson;
 	}
 

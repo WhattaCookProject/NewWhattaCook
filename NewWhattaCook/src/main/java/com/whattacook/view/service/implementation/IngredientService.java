@@ -60,7 +60,7 @@ public class IngredientService implements IngredientDetailService {
 		
 		try {
 			
-			IngredientJsonToSaveValidation.verifyIsAble(newIngredientJson);
+			IngredientToSaveValidation.verifyIsAble(newIngredientJson);
 			
 			response = component.saveNewIngredient(newIngredientJson);
 			
