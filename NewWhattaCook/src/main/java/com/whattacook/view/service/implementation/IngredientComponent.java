@@ -1,8 +1,7 @@
 package com.whattacook.view.service.implementation;
 
-import static com.whattacook.util.exceptions.IngredientExceptions.throwsUp;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -42,6 +41,15 @@ class IngredientComponent {
 				.flatMap(manager::save)
 				.map(Ingredient::toJson)
 				.map(ResponseEntity::ok);
+	}
+
+	Mono<ResponseEntity<Void>> deleteIngredient(String id) {
+		return Mono.just(id)
+				.flatMap(manager::findById)
+				.flatMap(x -> manager.delete(x)
+						.then(Mono.just(new ResponseEntity<Void>(HttpStatus.OK))))
+				.defaultIfEmpty(ResponseEntity.notFound()
+						.header("ERROR", "Ingredient not founded!").build());
 	}
 	
 }
