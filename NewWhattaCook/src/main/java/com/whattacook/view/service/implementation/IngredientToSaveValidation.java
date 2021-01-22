@@ -13,13 +13,13 @@ class IngredientToSaveValidation {
 
 	static void verifyIsAble(IngredientJson ingredientJson) throws IngredientExceptions {
 
-		valid(ingredientJson).ifNotHaveAllNeededToBeCreatedThrowException();
+		validate(ingredientJson).ifNotHaveAllNeededToBeCreatedThrowException();
 
 	}
-	
-	////// PRIVATE METHODS //////	////// PRIVATE METHODS //////	////// PRIVATE METHODS //////
 
-	private static IngredientToSaveValidation valid(IngredientJson ingredientJson) {
+	////// PRIVATE METHODS ////// ////// PRIVATE METHODS //////
+
+	private static IngredientToSaveValidation validate(IngredientJson ingredientJson) {
 		return new IngredientToSaveValidation(ingredientJson);
 	}
 
@@ -35,7 +35,7 @@ class IngredientToSaveValidation {
 	private Throwable throwExceptionWithEspecificFlawsOfThis() {
 
 		List<String> message = new ArrayList<>();
-		
+
 		if (notNullOrEmpty(ingredientJson.getId()))
 			message.add("Must not have ID!");
 
@@ -44,7 +44,7 @@ class IngredientToSaveValidation {
 
 		return IngredientExceptions.throwsUp(String.join(" ", message));
 	}
-	
+
 	private IngredientToSaveValidation(IngredientJson ingredientJson) {
 		this.ingredientJson = ingredientJson;
 	}
