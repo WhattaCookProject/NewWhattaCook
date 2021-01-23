@@ -23,11 +23,11 @@ class IngredientComponentAccessory {
 	}
 
 	static ResponseEntity<IngredientJson> ResponseNotFound() {
-		return ResponseEntity.notFound().header("ERROR", "Ingredient not founded!").build();
+		return ResponseEntity.notFound().header("ERROR", NOT_FOUND).build();
 	}
 	
 	static ResponseEntity<IngredientJson> ResponseNotContent() {
-		return ResponseEntity.noContent().header("ERROR", "Ingredient not founded!").build();
+		return ResponseEntity.noContent().header("ERROR", NOT_FOUND).build();
 	}
 
 	static Mono<ResponseEntity<Void>> ResponseVoidOk() {
@@ -35,7 +35,13 @@ class IngredientComponentAccessory {
 	}
 	
 	static ResponseEntity<Void> ResponseVoidNotFound() {
-		return ResponseEntity.notFound().header("ERROR", "Ingredient not founded!").build();
+		return ResponseEntity.notFound().header("ERROR", NOT_FOUND).build();
 	}
+	
+	static ResponseEntity<Void> ResponseVoidNotContent() {
+		return ResponseEntity.noContent().header("ERROR", NOT_FOUND).build();
+	}
+	
+	private static final String NOT_FOUND = "Ingredient not founded!";
 
 }

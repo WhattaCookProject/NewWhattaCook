@@ -52,7 +52,7 @@ public class IngredientController {
 	}
 	
 	@DeleteMapping
-	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@ResponseStatus(HttpStatus.OK)
 	public Mono<ResponseEntity<Void>> deleteIngredient(@RequestBody IngredientJson ingredient) {
 		return service.deleteIngredient(ingredient);
 	}

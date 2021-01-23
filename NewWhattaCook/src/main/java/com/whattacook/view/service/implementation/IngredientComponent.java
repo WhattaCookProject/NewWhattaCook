@@ -4,6 +4,7 @@ import static com.whattacook.util.exceptions.IngredientExceptions.throwsUp;
 import static com.whattacook.view.service.implementation.IngredientComponentAccessory.ResponseNotFound;
 import static com.whattacook.view.service.implementation.IngredientComponentAccessory.ResponseNotContent;
 import static com.whattacook.view.service.implementation.IngredientComponentAccessory.ResponseVoidNotFound;
+import static com.whattacook.view.service.implementation.IngredientComponentAccessory.ResponseVoidNotContent;
 import static com.whattacook.view.service.implementation.IngredientComponentAccessory.ResponseVoidOk;
 import static com.whattacook.view.service.implementation.IngredientComponentAccessory.ifHasNameTrueIfHasIdFalseElseThrowsException;
 
@@ -70,7 +71,7 @@ class IngredientComponent {
 		return Mono.just(ingredient)
 				.flatMap(x -> findIngredient(x))
 				.flatMap(x -> manager.delete(x).then(ResponseVoidOk()))
-				.defaultIfEmpty(ResponseVoidNotFound())
+				.defaultIfEmpty(ResponseVoidNotContent())
 				.onErrorReturn(ResponseVoidNotFound());
 	}
 
