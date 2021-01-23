@@ -9,5 +9,7 @@ import reactor.core.publisher.Mono;
 public interface IngredientManager extends ReactiveMongoRepository<Ingredient, String>{
 	
 	Mono<Boolean> existsByNameIgnoreCase(String name);
+	
+	Mono<Ingredient> findByNameIgnoreCase(String name);
 
 }

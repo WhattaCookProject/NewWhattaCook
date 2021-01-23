@@ -1,6 +1,9 @@
 package com.whattacook.view.service.implementation;
 
 import static com.whattacook.util.exceptions.IngredientExceptions.throwsUp;
+import static com.whattacook.view.service.implementation.IngredientComponentAccessory.ResponseNotFound;
+import static com.whattacook.view.service.implementation.IngredientComponentAccessory.ResponseNotContent;
+import static com.whattacook.view.service.implementation.IngredientComponentAccessory.ifHasNameTrueIfHasIdFalseElseThrowsException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,39 +23,22 @@ class IngredientComponent {
 	
 	@Autowired
 	private IngredientManager manager;
-
-	Flux<IngredientJson> findAllIngredients() throws IngredientExceptions {
-		return Flux.from(manager.findAll())
-				.map(Ingredient::toJson)
-				.defaultIfEmpty(IngredientJson.error("Sorry, there's nothing to cook"));
-				
-	}
-
-	Mono<ResponseEntity<IngredientJson>> findIngredientById(String id) {
-		return  Mono.just(id)
-				.flatMap(manager::findById)
-				.map(Ingredient::toJson)
-				.map(ResponseEntity::ok)
-				.defaultIfEmpty(ResponseEntity.noContent()
-						.header("ERROR", "Ingredient not founded!").build());
-	}
-
+	
 	Mono<ResponseEntity<IngredientJson>> saveNewIngredient(IngredientJson newIngredientJson) {
-		ifNameIsAlredyRegisteredThrowsException(newIngredientJson);
 		return Mono.just(newIngredientJson)
 				.map(IngredientJson::toIngredient) 
 				.flatMap(manager::save)
 				.map(Ingredient::toJson)
 				.map(ResponseEntity::ok);
 	}
-
-	private void ifNameIsAlredyRegisteredThrowsException(IngredientJson newIngredientJson) {
-		if (nameIsAlredyRegistered(newIngredientJson))
+	
+	void ifNameIsAlredyRegisteredThrowsException(IngredientJson newIngredientJson) {
+		if (nameIsAlredyRegistered(newIngredientJson.getName()))
 			throwsUp("This Ingredient is already registered!");
 	}
 	
-	private boolean nameIsAlredyRegistered(IngredientJson newIngredientJson) {
-		return manager.existsByNameIgnoreCase(newIngredientJson.getName()).block();
+	boolean nameIsAlredyRegistered(String name) {
+		return manager.existsByNameIgnoreCase(name).block();
 	}
 
 	Mono<ResponseEntity<Void>> deleteIngredient(String id) {
@@ -62,6 +48,29 @@ class IngredientComponent {
 						.then(Mono.just(new ResponseEntity<Void>(HttpStatus.OK))))
 				.defaultIfEmpty(ResponseEntity.notFound()
 						.header("ERROR", "Ingredient not founded!").build());
+	Flux<IngredientJson> findAllIngredients() throws IngredientExceptions {
+		return Flux.from(manager.findAll())
+				.map(Ingredient::toJson)
+				.defaultIfEmpty(IngredientJson.error("Sorry, there's nothing to cook"));
+				
+	}
+	
+	Mono<ResponseEntity<IngredientJson>> findIngredientByJson(IngredientJson ingredient) {
+		return Mono.just(ingredient)
+				.flatMap(x -> findIngredient(x))
+				.map(Ingredient::toJson)
+				.map(ResponseEntity::ok)
+				.defaultIfEmpty(ResponseNotContent())
+				.onErrorReturn(ResponseNotFound());
+				
+	}
+	
+	private Mono<Ingredient> findIngredient(IngredientJson ingredient) {
+		return ifHasNameTrueIfHasIdFalseElseThrowsException(ingredient) 
+				? manager.findByNameIgnoreCase(ingredient.getName()) 
+						: manager.findById(ingredient.getId());
+	}
+	
 	}
 	
 }

@@ -37,8 +37,8 @@ public class IngredientController {
 	
 	@GetMapping()
 	@ResponseStatus(HttpStatus.OK)
-	public Mono<ResponseEntity<IngredientJson>> showIngredientById(@RequestBody @NonNull String id) {
-		return service.showIngredientById(id);
+	public Mono<ResponseEntity<IngredientJson>> showIngredient(@RequestBody IngredientJson ingredient) {
+		return service.showIngredient(ingredient);
 	}
 	
 	@PostMapping

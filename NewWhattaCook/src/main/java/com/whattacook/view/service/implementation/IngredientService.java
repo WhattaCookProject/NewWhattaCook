@@ -37,13 +37,13 @@ public class IngredientService implements IngredientDetailService {
 	}
 
 	@Override
-	public Mono<ResponseEntity<IngredientJson>> showIngredientById(String id) {
+	public Mono<ResponseEntity<IngredientJson>> showIngredient(IngredientJson ingredient) {
 
 		Mono<ResponseEntity<IngredientJson>> response = Mono.empty();
 		
 		try {
 			
-			response = component.findIngredientById(id);
+			response = component.findIngredientByJson(ingredient);
 			
 		} catch (Exception e) {
 			response = Mono.just(ResponseEntity.status(303)
@@ -61,6 +61,8 @@ public class IngredientService implements IngredientDetailService {
 		try {
 			
 			IngredientToSaveValidation.verifyIsAble(newIngredientJson);
+			
+			component.ifNameIsAlredyRegisteredThrowsException(newIngredientJson);
 			
 			response = component.saveNewIngredient(newIngredientJson);
 			

@@ -17,7 +17,7 @@ public interface IngredientDetailService {
 	public Flux<IngredientJson> showAllIngredients();
 	
 	//GET by id
-	public Mono<ResponseEntity<IngredientJson>> showIngredientById(String id);
+	public Mono<ResponseEntity<IngredientJson>> showIngredient(IngredientJson ingredient);
 	
 	//POST
 	public Mono<ResponseEntity<IngredientJson>> saveNewIngredient(IngredientJson ingredient);
