@@ -83,7 +83,7 @@ public class IngredientService implements IngredientDetailService {
 			
 			IngredientToUpdateValidation.verifyIsAble(ingredientJson);
 			
-			response = component.saveNewIngredient(ingredientJson);
+			response = component.updateIngredient(ingredientJson);
 			
 			
 		} catch (Exception e) {
