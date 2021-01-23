@@ -48,7 +48,7 @@ public class IngredientController {
 	
 	@PutMapping
 	@ResponseStatus(HttpStatus.OK)
-	public Mono<ResponseEntity<Ingredient>> modifyNameIngredient(@RequestBody IngredientJson ingredient) {
+	public Mono<ResponseEntity<IngredientJson>> modifyNameIngredient(@RequestBody IngredientJson ingredient) {
 		return service.modifyNameIngredient(ingredient);
 	}
 	

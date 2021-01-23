@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import com.whattacook.model.ingredient.Ingredient;
 import com.whattacook.model.ingredient.IngredientJson;
 import com.whattacook.model.ingredient.IngredientManager;
+import com.whattacook.util.TitleCase;
 import com.whattacook.util.exceptions.IngredientExceptions;
 
 import reactor.core.publisher.Flux;
@@ -71,6 +72,19 @@ class IngredientComponent {
 				.flatMap(x -> manager.delete(x).then(ResponseVoidOk()))
 				.defaultIfEmpty(ResponseVoidNotFound())
 				.onErrorReturn(ResponseVoidNotFound());
+	}
+
+	Mono<ResponseEntity<IngredientJson>> updateIngredient(IngredientJson ingredientJson) {
+		return  Mono.just(ingredientJson)
+				.flatMap(x -> findIngredient(x))
+				.flatMap(x -> {
+					x.setName(TitleCase.all(ingredientJson.getName()));
+					return manager.save(x);
+				})
+				.map(Ingredient::toJson)
+				.map(ResponseEntity::ok)
+				.defaultIfEmpty(ResponseNotContent())
+				.onErrorReturn(ResponseNotFound());
 	}
 	
 }
