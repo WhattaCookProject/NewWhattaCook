@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.whattacook.model.ingredient.Ingredient;
 import com.whattacook.model.ingredient.IngredientJson;
 import com.whattacook.view.service.implementation.IngredientService;
 
