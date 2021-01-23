@@ -26,7 +26,7 @@ public interface IngredientDetailService {
 	public Mono<ResponseEntity<Ingredient>> modifyNameIngredient(IngredientJson ingredient);
 	
 	//DELETE
-	public Mono<ResponseEntity<Void>> deleteIngredient(String id);
+	public Mono<ResponseEntity<Void>> deleteIngredient(IngredientJson ingredient);
 
 	//Returns HashMap with recipe id & times that is repeated
 	Flux<ResponseEntity<HashMap<Integer, Object>>> recipeCounter(List<String> listIngredientId);

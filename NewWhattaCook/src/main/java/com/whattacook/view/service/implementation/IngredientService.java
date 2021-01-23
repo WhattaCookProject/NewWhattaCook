@@ -93,14 +93,14 @@ public class IngredientService implements IngredientDetailService {
 	}
 
 	@Override
-	public Mono<ResponseEntity<Void>> deleteIngredient(String id) {
+	public Mono<ResponseEntity<Void>> deleteIngredient(IngredientJson ingredient) {
 
 
 		Mono<ResponseEntity<Void>> response = Mono.empty();
 		
 		try {
 			
-			response = component.deleteIngredient(id);
+			response = component.deleteIngredient(ingredient);
 			
 		} catch (Exception e) {
 			response = Mono.just(ResponseEntity.status(303)

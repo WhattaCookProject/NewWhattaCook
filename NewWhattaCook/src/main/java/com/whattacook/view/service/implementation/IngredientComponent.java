@@ -3,10 +3,11 @@ package com.whattacook.view.service.implementation;
 import static com.whattacook.util.exceptions.IngredientExceptions.throwsUp;
 import static com.whattacook.view.service.implementation.IngredientComponentAccessory.ResponseNotFound;
 import static com.whattacook.view.service.implementation.IngredientComponentAccessory.ResponseNotContent;
+import static com.whattacook.view.service.implementation.IngredientComponentAccessory.ResponseVoidNotFound;
+import static com.whattacook.view.service.implementation.IngredientComponentAccessory.ResponseVoidOk;
 import static com.whattacook.view.service.implementation.IngredientComponentAccessory.ifHasNameTrueIfHasIdFalseElseThrowsException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -41,13 +42,6 @@ class IngredientComponent {
 		return manager.existsByNameIgnoreCase(name).block();
 	}
 
-	Mono<ResponseEntity<Void>> deleteIngredient(String id) {
-		return Mono.just(id)
-				.flatMap(manager::findById)
-				.flatMap(x -> manager.delete(x)
-						.then(Mono.just(new ResponseEntity<Void>(HttpStatus.OK))))
-				.defaultIfEmpty(ResponseEntity.notFound()
-						.header("ERROR", "Ingredient not founded!").build());
 	Flux<IngredientJson> findAllIngredients() throws IngredientExceptions {
 		return Flux.from(manager.findAll())
 				.map(Ingredient::toJson)
@@ -71,6 +65,12 @@ class IngredientComponent {
 						: manager.findById(ingredient.getId());
 	}
 	
+	Mono<ResponseEntity<Void>> deleteIngredient(IngredientJson ingredient) {
+		return Mono.just(ingredient)
+				.flatMap(x -> findIngredient(x))
+				.flatMap(x -> manager.delete(x).then(ResponseVoidOk()))
+				.defaultIfEmpty(ResponseVoidNotFound())
+				.onErrorReturn(ResponseVoidNotFound());
 	}
 	
 }

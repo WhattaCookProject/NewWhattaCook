@@ -3,7 +3,6 @@ package com.whattacook.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,8 +54,8 @@ public class IngredientController {
 	
 	@DeleteMapping
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public Mono<ResponseEntity<Void>> deleteIngredient(@RequestBody @NonNull String id) {
-		return service.deleteIngredient(id);
+	public Mono<ResponseEntity<Void>> deleteIngredient(@RequestBody IngredientJson ingredient) {
+		return service.deleteIngredient(ingredient);
 	}
 
 }

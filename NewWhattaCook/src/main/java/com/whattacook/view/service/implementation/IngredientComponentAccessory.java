@@ -30,4 +30,12 @@ class IngredientComponentAccessory {
 		return ResponseEntity.noContent().header("ERROR", "Ingredient not founded!").build();
 	}
 
+	static Mono<ResponseEntity<Void>> ResponseVoidOk() {
+		return Mono.just(new ResponseEntity<Void>(HttpStatus.OK));
+	}
+	
+	static ResponseEntity<Void> ResponseVoidNotFound() {
+		return ResponseEntity.notFound().header("ERROR", "Ingredient not founded!").build();
+	}
+
 }
