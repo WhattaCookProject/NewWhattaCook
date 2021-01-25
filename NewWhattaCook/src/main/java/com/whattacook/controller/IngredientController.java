@@ -3,7 +3,6 @@ package com.whattacook.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.whattacook.model.ingredient.Ingredient;
 import com.whattacook.model.ingredient.IngredientJson;
 import com.whattacook.view.service.implementation.IngredientService;
 
@@ -37,8 +35,8 @@ public class IngredientController {
 	
 	@GetMapping()
 	@ResponseStatus(HttpStatus.OK)
-	public Mono<ResponseEntity<IngredientJson>> showIngredientById(@RequestBody @NonNull String id) {
-		return service.showIngredientById(id);
+	public Mono<ResponseEntity<IngredientJson>> showIngredient(@RequestBody IngredientJson ingredient) {
+		return service.showIngredient(ingredient);
 	}
 	
 	@PostMapping
@@ -49,14 +47,14 @@ public class IngredientController {
 	
 	@PutMapping
 	@ResponseStatus(HttpStatus.OK)
-	public Mono<ResponseEntity<Ingredient>> modifyNameIngredient(@RequestBody IngredientJson ingredient) {
+	public Mono<ResponseEntity<IngredientJson>> modifyNameIngredient(@RequestBody IngredientJson ingredient) {
 		return service.modifyNameIngredient(ingredient);
 	}
 	
 	@DeleteMapping
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public Mono<ResponseEntity<Void>> deleteIngredient(@RequestBody @NonNull String id) {
-		return service.deleteIngredient(id);
+	@ResponseStatus(HttpStatus.OK)
+	public Mono<ResponseEntity<Void>> deleteIngredient(@RequestBody IngredientJson ingredient) {
+		return service.deleteIngredient(ingredient);
 	}
 
 }

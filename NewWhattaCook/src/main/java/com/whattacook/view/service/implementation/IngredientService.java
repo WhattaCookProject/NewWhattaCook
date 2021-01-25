@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.whattacook.model.ingredient.Ingredient;
 import com.whattacook.model.ingredient.IngredientJson;
 import com.whattacook.view.service.IngredientDetailService;
 
@@ -37,13 +36,13 @@ public class IngredientService implements IngredientDetailService {
 	}
 
 	@Override
-	public Mono<ResponseEntity<IngredientJson>> showIngredientById(String id) {
+	public Mono<ResponseEntity<IngredientJson>> showIngredient(IngredientJson ingredientJson) {
 
 		Mono<ResponseEntity<IngredientJson>> response = Mono.empty();
 		
 		try {
 			
-			response = component.findIngredientById(id);
+			response = component.findIngredientByJson(ingredientJson);
 			
 		} catch (Exception e) {
 			response = Mono.just(ResponseEntity.status(303)
@@ -54,14 +53,18 @@ public class IngredientService implements IngredientDetailService {
 	}
 
 	@Override
-	public Mono<ResponseEntity<IngredientJson>> saveNewIngredient(IngredientJson newIngredientJson) {
+	public Mono<ResponseEntity<IngredientJson>> saveNewIngredient(IngredientJson ingredientJson) {
 
 		Mono<ResponseEntity<IngredientJson>> response = Mono.empty();
 		
 		try {
 			
-			response = component.saveNewIngredient(newIngredientJson);
-
+			IngredientToSaveValidation.verifyIsAble(ingredientJson);
+			
+			component.ifNameIsAlredyRegisteredThrowsException(ingredientJson);
+			
+			response = component.saveNewIngredient(ingredientJson);
+			
 		} catch (Exception e) {
 			response = Mono.just(ResponseEntity.status(303)
 					.header("ERROR", e.getMessage()).build());
@@ -71,13 +74,16 @@ public class IngredientService implements IngredientDetailService {
 	}
 
 	@Override
-	public Mono<ResponseEntity<Ingredient>> modifyNameIngredient(IngredientJson ingredient) {
+	public Mono<ResponseEntity<IngredientJson>> modifyNameIngredient(IngredientJson ingredientJson) {
 
 
-		Mono<ResponseEntity<Ingredient>> response = Mono.empty();
+		Mono<ResponseEntity<IngredientJson>> response = Mono.empty();
 		
 		try {
 			
+			IngredientToUpdateValidation.verifyIsAble(ingredientJson);
+			
+			response = component.updateIngredient(ingredientJson);
 			
 			
 		} catch (Exception e) {
@@ -89,14 +95,14 @@ public class IngredientService implements IngredientDetailService {
 	}
 
 	@Override
-	public Mono<ResponseEntity<Void>> deleteIngredient(String id) {
+	public Mono<ResponseEntity<Void>> deleteIngredient(IngredientJson ingredientJson) {
 
 
 		Mono<ResponseEntity<Void>> response = Mono.empty();
 		
 		try {
 			
-			response = component.deleteIngredient(id);
+			response = component.deleteIngredient(ingredientJson);
 			
 		} catch (Exception e) {
 			response = Mono.just(ResponseEntity.status(303)
