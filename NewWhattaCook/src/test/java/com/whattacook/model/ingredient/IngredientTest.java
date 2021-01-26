@@ -18,7 +18,7 @@ class IngredientTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		id = "ascdvfbgnhjm2345678";
-		name = "potatoe";
+		name = "potato";
 		ingredient = new Ingredient(id, name);
 		ingredient2 = new Ingredient();
 		ingredient2.setId(id);
@@ -28,8 +28,8 @@ class IngredientTest {
 
 	@Test
 	@DisplayName("Getters and Setters TESTING")
-	void gettersSettersTest() {
-		Ingredient toCompare = new Ingredient("ascdvfbgnhjm2345678", "potatoe");
+	void gettersAndSettersTest() {
+		Ingredient toCompare = new Ingredient("ascdvfbgnhjm2345678", "potato");
 		
 		assertAll(
 				() -> assertEquals(id, toCompare.getId(), "equals1"),
