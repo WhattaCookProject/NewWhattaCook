@@ -1,5 +1,7 @@
 package com.whattacook.model.recipe;
 
+import java.util.Objects;
+
 public class RecipeJson {
 	
 	private String id;
@@ -40,5 +42,32 @@ public class RecipeJson {
 	public void setInstructions(String instructions) {
 		this.instructions = instructions;
 	}
+
+	@Override
+	public String toString() {
+		return "RecipeJson [id=" + id + ", title=" + title + ", instructions=" + instructions + "]";
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, instructions, title);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		RecipeJson other = (RecipeJson) obj;
+		return Objects.equals(id, other.id) && Objects.equals(instructions, other.instructions)
+				&& Objects.equals(title, other.title);
+	}
+
 	
 }
