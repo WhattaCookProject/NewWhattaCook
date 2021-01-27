@@ -3,6 +3,8 @@ package com.whattacook.model.ingredient;
 import static com.whattacook.util.TitleCase.all;
 import static com.whattacook.util.Valid.notNullOrEmpty;
 
+import java.util.Objects;
+
 public class IngredientJson {
 
 	private String id;
@@ -11,7 +13,7 @@ public class IngredientJson {
 	public IngredientJson() {
 	}
 
-	private IngredientJson(String id, String name) {
+	public IngredientJson(String id, String name) {
 		this.id = id;
 		this.name = name;
 	}
@@ -56,5 +58,31 @@ public class IngredientJson {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("IngredientJson : {id : %s, name : %s}", id, name);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		IngredientJson other = (IngredientJson) obj;
+		return Objects.equals(id, other.id) && Objects.equals(name, other.name);
+	}
+
 
 }
