@@ -66,5 +66,21 @@ class IngredientManagerTest {
 		assertTrue(exist, "Should be false, because it doesn't exist in the database!");
 	}
 
+	@Test
+	@Order(4)
+	@DisplayName("Find Ingrediente By Name Ignore Case - FALSE")
+	final void test01_FindByNameIgnoreCase() {
+		exist = manager.findByNameIgnoreCase(NOT_EXIST).hasElement().block();
+		assertFalse(exist, "Should be false, because it doesn't exist in the database!");
+	}
+	
+	@Test
+	@Order(5)
+	@DisplayName("Find Ingrediente By Name Ignore Case")
+	final void test02_FindByNameIgnoreCase() {
+		toCompare = manager.findByNameIgnoreCase(NAME).block();
+		assertEquals(ingredient, toCompare);
+	}
+
 
 }
