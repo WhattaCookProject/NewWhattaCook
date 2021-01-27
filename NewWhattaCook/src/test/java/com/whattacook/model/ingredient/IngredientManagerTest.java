@@ -50,5 +50,21 @@ class IngredientManagerTest {
 		
 	}
 
+	@Test
+	@Order(2)
+	@DisplayName("Exist Ingrediente By Name Ignore Case - FALSE")
+	final void test01_ExistsByNameIgnoreCase() {
+		exist = manager.existsByNameIgnoreCase(NOT_EXIST).block();
+		assertFalse(exist, "Should be false, because it doesn't exist in the database!");
+	}
+	
+	@Test
+	@Order(3)
+	@DisplayName("Exist Ingrediente By Name Ignore Case - TRUE")
+	final void test02_ExistsByNameIgnoreCase() {
+		exist = manager.existsByNameIgnoreCase(NAME).block();
+		assertTrue(exist, "Should be false, because it doesn't exist in the database!");
+	}
+
 
 }
