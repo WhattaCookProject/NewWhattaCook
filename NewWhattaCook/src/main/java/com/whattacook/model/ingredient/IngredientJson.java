@@ -5,7 +5,7 @@ import static com.whattacook.util.Valid.notNullOrEmpty;
 
 import java.util.Objects;
 
-public class IngredientJson {
+public class IngredientJson implements Comparable<IngredientJson> {
 
 	private String id;
 	private String name;
@@ -82,6 +82,11 @@ public class IngredientJson {
 		}
 		IngredientJson other = (IngredientJson) obj;
 		return Objects.equals(id, other.id) && Objects.equals(name, other.name);
+	}
+
+	@Override
+	public int compareTo(IngredientJson o) {
+		return this.getName().compareToIgnoreCase(o.getName());
 	}
 
 
