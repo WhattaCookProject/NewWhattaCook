@@ -37,8 +37,8 @@ public class IngredientJson {
 
 		ingredient.setName(all(name));
 
-		if (notNullOrEmpty(ingredient.getId()))
-			ingredient.setId(id);
+		if (notNullOrEmpty(this.getId()))
+			ingredient.setId(this.id);
 
 		return ingredient;
 	}

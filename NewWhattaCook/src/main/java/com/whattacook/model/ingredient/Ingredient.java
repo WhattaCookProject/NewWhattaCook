@@ -62,7 +62,7 @@ public class Ingredient {
 			return false;
 		}
 		Ingredient other = (Ingredient) obj;
-		return Objects.equals(id, other.id) && Objects.equals(name, other.name);
+		return Objects.equals(id, other.id) && name.equalsIgnoreCase(other.getName());
 	}
 
 }

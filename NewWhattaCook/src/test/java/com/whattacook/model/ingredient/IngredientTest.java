@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.whattacook.util.TitleCase;
+
 class IngredientTest {
 	
 	private String id;
@@ -40,10 +42,10 @@ class IngredientTest {
 		Ingredient toCompare = new Ingredient("ascdvfbgnhjm2345678", "potato");
 		
 		assertAll(
-				() -> assertEquals(id, toCompare.getId(), "equals1"),
-				() -> assertEquals(name, toCompare.getName(), "equals2"),
-				() -> assertEquals(ingredient, toCompare, "equals3"),
-				() -> assertEquals(ingredient2, toCompare, "equals4")
+				() -> assertEquals(id, toCompare.getId(), "Equals 1"),
+				() -> assertEquals(name, toCompare.getName(), "Equals 2"),
+				() -> assertEquals(ingredient, toCompare, "Equals 3"),
+				() -> assertTrue(ingredient2.equals(toCompare), "True 1")
 				);
 	}
 	
@@ -53,10 +55,37 @@ class IngredientTest {
 		IngredientJson toCompare = new IngredientJson("ascdvfbgnhjm2345678", "potato");
 		
 		assertAll(
-				() -> assertEquals(id, toCompare.getId(), "equals1"),
-				() -> assertEquals(name, toCompare.getName(), "equals2"),
-				() -> assertEquals(ingredientJson, toCompare, "equals3"),
-				() -> assertEquals(ingredientJson2, toCompare, "equals3")
+				() -> assertEquals(id, toCompare.getId(), "Equals 1"),
+				() -> assertEquals(name, toCompare.getName(), "Equals 2"),
+				() -> assertEquals(ingredientJson, toCompare, "Equals 3"),
+				() -> assertTrue(ingredientJson2.equals(toCompare), "True 1")
+				);
+	}
+	
+	@Test
+	@DisplayName("Ingredient to Json")
+	void test_IngredientToJson() {
+		IngredientJson toCompare = ingredient.toJson();
+		
+		assertAll(
+				() -> assertEquals(id, toCompare.getId(), "Equals 1"),
+				() -> assertEquals(name, toCompare.getName(), "Equals 2"),
+				() -> assertEquals(ingredientJson, toCompare, "Equals 3"),
+				() -> assertTrue(ingredientJson2.equals(toCompare), "True 1")
+				);
+	}
+	
+	@Test
+	@DisplayName("Json to Ingredient")
+	void test_JsonToIngredient() {
+		Ingredient toCompare = ingredientJson.toIngredient();
+		name = TitleCase.all(name);
+		
+		assertAll(
+				() -> assertEquals(id, toCompare.getId(), "Equals 1"),
+				() -> assertEquals(name, toCompare.getName(), "Equals 2"),
+				() -> assertEquals(ingredient, toCompare, "Equals 3"),
+				() -> assertTrue(ingredient2.equals(toCompare), "True 1")
 				);
 	}
 
