@@ -1,5 +1,6 @@
 package com.whattacook.model.recipe;
 
+import static com.whattacook.util.TitleCase.all;
 import static com.whattacook.util.Valid.notNullOrEmpty;
 
 import java.util.Objects;
@@ -44,12 +45,12 @@ public class RecipeJson {
 	public Recipe toRecipe() {
 		Recipe recipe = new Recipe();
 		
-		if (notNullOrEmpty(this.id))
-			recipe.setId(this.id);
+		if (notNullOrEmpty(id))
+			recipe.setId(id);
 		
-		recipe.setTitle(this.title);
-		recipe.setInstructions(this.instructions);
-		recipe.setIngredients(this.getIngredients()
+		recipe.setTitle(all(title));
+		recipe.setInstructions(instructions);
+		recipe.setIngredients(getIngredients()
 				.stream().map(IngredientJson::toIngredient)
 				.collect(Collectors.toCollection(() -> new TreeSet<>())));
 		
