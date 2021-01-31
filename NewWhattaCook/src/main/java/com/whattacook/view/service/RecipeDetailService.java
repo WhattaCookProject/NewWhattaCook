@@ -2,7 +2,7 @@ package com.whattacook.view.service;
 
 import org.springframework.http.ResponseEntity;
 
-import com.whattacook.model.recipe.Recipe;
+import com.whattacook.model.recipe.RecipeJson;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -10,18 +10,18 @@ import reactor.core.publisher.Mono;
 public interface RecipeDetailService {
 	
 	//GET all
-	Flux<Recipe> showAllRecipes();
+	Flux<RecipeJson> showAllRecipes();
 
 	//GET by id
-	Mono<ResponseEntity<Recipe>> showRecipeById(Long id);
+	Mono<ResponseEntity<RecipeJson>> showRecipeById(RecipeJson recipeJson);
 
 	//POST
-	Mono<ResponseEntity<Recipe>> saveNewRecipe(Recipe recipe);
+	Mono<ResponseEntity<RecipeJson>> saveNewRecipe(RecipeJson recipeJson);
 	
 	//PUT
-	Mono<ResponseEntity<Recipe>> modifyRecipe(Recipe recipe);
+	Mono<ResponseEntity<RecipeJson>> modifyRecipe(RecipeJson recipeJson);
 
 	//DELETE
-	Mono<ResponseEntity<Void>> deleteRecipe(Long id);
+	Mono<ResponseEntity<Void>> deleteRecipe(RecipeJson recipeJson);
 
 }

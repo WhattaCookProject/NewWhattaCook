@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.whattacook.model.recipe.Recipe;
+import com.whattacook.model.recipe.RecipeJson;
 import com.whattacook.view.service.RecipeDetailService;
 
 import reactor.core.publisher.Flux;
@@ -17,9 +17,9 @@ public class RecipeService implements RecipeDetailService {
 	private RecipeComponent component;
 
 	@Override
-	public Flux<Recipe> showAllRecipes() {
+	public Flux<RecipeJson> showAllRecipes() {
 		
-		Flux<Recipe> response = Flux.empty();
+		Flux<RecipeJson> response = Flux.empty();
 		
 		try {
 			
@@ -33,9 +33,9 @@ public class RecipeService implements RecipeDetailService {
 	}
 
 	@Override
-	public Mono<ResponseEntity<Recipe>> showRecipeById(Long id) {
+	public Mono<ResponseEntity<RecipeJson>> showRecipeById(RecipeJson recipeJson) {
 
-		Mono<ResponseEntity<Recipe>> response = Mono.empty();
+		Mono<ResponseEntity<RecipeJson>> response = Mono.empty();
 		
 		try {
 			
@@ -48,9 +48,9 @@ public class RecipeService implements RecipeDetailService {
 	}
 
 	@Override
-	public Mono<ResponseEntity<Recipe>> saveNewRecipe(Recipe recipe) {
+	public Mono<ResponseEntity<RecipeJson>> saveNewRecipe(RecipeJson recipeJson) {
 
-		Mono<ResponseEntity<Recipe>> response = Mono.empty();
+		Mono<ResponseEntity<RecipeJson>> response = Mono.empty();
 		
 		try {
 			
@@ -63,9 +63,9 @@ public class RecipeService implements RecipeDetailService {
 	}
 	
 	@Override
-	public Mono<ResponseEntity<Recipe>> modifyRecipe(Recipe recipe) {
+	public Mono<ResponseEntity<RecipeJson>> modifyRecipe(RecipeJson recipeJson) {
 
-		Mono<ResponseEntity<Recipe>> response = Mono.empty();
+		Mono<ResponseEntity<RecipeJson>> response = Mono.empty();
 		
 		try {
 			
@@ -78,7 +78,7 @@ public class RecipeService implements RecipeDetailService {
 	}
 
 	@Override
-	public Mono<ResponseEntity<Void>> deleteRecipe(Long id) {
+	public Mono<ResponseEntity<Void>> deleteRecipe(RecipeJson recipeJson) {
 
 
 		Mono<ResponseEntity<Void>> response = Mono.empty();
