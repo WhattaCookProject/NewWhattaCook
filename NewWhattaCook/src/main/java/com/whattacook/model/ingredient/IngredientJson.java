@@ -18,17 +18,8 @@ public class IngredientJson implements Comparable<IngredientJson> {
 		this.name = name;
 	}
 
-	protected IngredientJson(Ingredient ingredient) {
-		this.id = ingredient.getId();
-		this.name = ingredient.getName();
-	}
-
-	public static IngredientJson error(String error) {
-		return new IngredientJson("ERROR", error);
-	}
-
 	public static IngredientJson from(Ingredient ingredient) {
-		return new IngredientJson(ingredient);
+		return new IngredientJson(ingredient.getId(), ingredient.getName());
 	}
 
 	public Ingredient toIngredient() {
@@ -37,10 +28,14 @@ public class IngredientJson implements Comparable<IngredientJson> {
 
 		ingredient.setName(all(name));
 
-		if (notNullOrEmpty(this.getId()))
-			ingredient.setId(this.id);
+		if (notNullOrEmpty(id))
+			ingredient.setId(id);
 
 		return ingredient;
+	}
+	
+	public static IngredientJson ERROR(String msg) {
+		return new IngredientJson("ERROR", msg);
 	}
 
 	public String getId() {
