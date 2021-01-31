@@ -18,6 +18,33 @@ public class RecipeJson {
 		this.instructions = instructions;
 	}
 	
+	public RecipeJson(Recipe recipe) {
+		this.id = recipe.getId();
+		this.title = recipe.getTitle();
+		this.instructions = recipe.getInstructions();
+		this.ingredients = recipe.getIngredients()
+				.stream().map(Ingredient::toJson)
+				.collect(Collectors.toCollection(() -> new TreeSet<>()));
+	}
+
+	public static RecipeJson from(Recipe recipe) {
+		return new RecipeJson(recipe);
+	}
+	
+	public Recipe toRecipe() {
+		Recipe recipe = new Recipe();
+		
+		if (notNullOrEmpty(this.id))
+			recipe.setId(this.id);
+		
+		recipe.setTitle(this.title);
+		recipe.setInstructions(this.instructions);
+		recipe.setIngredients(this.getIngredients()
+				.stream().map(IngredientJson::toIngredient)
+				.collect(Collectors.toCollection(() -> new TreeSet<>())));
+		
+		return recipe;
+	}
 
 	public String getId() {
 		return id;
