@@ -6,7 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "ingredient")
-public class Ingredient {
+public class Ingredient implements Comparable<Ingredient> {
 
 	@Id
 	private String id;
@@ -62,7 +62,12 @@ public class Ingredient {
 			return false;
 		}
 		Ingredient other = (Ingredient) obj;
-		return Objects.equals(id, other.id) && Objects.equals(name, other.name);
+		return Objects.equals(id, other.id) && name.equalsIgnoreCase(other.getName());
+	}
+
+	@Override
+	public int compareTo(Ingredient o) {
+		return this.getName().compareToIgnoreCase(o.getName());
 	}
 
 }

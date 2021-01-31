@@ -1,62 +1,85 @@
 package com.whattacook.model.ingredient;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static com.whattacook.model.KitchenFactory.emptyIngredient;
+import static com.whattacook.model.KitchenFactory.emptyIngredientJson;
+import static com.whattacook.model.KitchenFactory.fullyIngredient;
+import static com.whattacook.model.KitchenFactory.fullyIngredientJson;
+import static com.whattacook.model.KitchenFactory.getId;
+import static com.whattacook.model.KitchenFactory.getName;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class IngredientTest {
-	
-	private String id;
-	private String name;
-	
-	private Ingredient ingredient;
-	private Ingredient ingredient2;
-	
-	private IngredientJson ingredientJson;
-	private IngredientJson ingredientJson2;
 
+	private final String ID = getId();
+	private final String NAME = getName();
+	private final Ingredient ingredient = fullyIngredient();
+	private final IngredientJson ingredientJson = fullyIngredientJson();
+	private Ingredient toCompare;
+	private IngredientJson toCompareJson;
 
 	@BeforeEach
 	void setUp() throws Exception {
-		id = "ascdvfbgnhjm2345678";
-		name = "potato";
-		
-		ingredient = new Ingredient(id, name);
-		ingredient2 = new Ingredient();
-		ingredient2.setId(id);
-		ingredient2.setName(name);
-		
-		ingredientJson = new IngredientJson(id, name);
-		ingredientJson2 = new IngredientJson();
-		ingredientJson2.setId(id);
-		ingredientJson2.setName(name);
+		toCompare = null;
+		toCompareJson = null;
 	}
 
 	@Test
-	@DisplayName("Getters&Setters Ingredient")
+	@DisplayName("Getters and Setters Ingredient")
 	void gettersSettersIngredientTest() {
-		Ingredient toCompare = new Ingredient("ascdvfbgnhjm2345678", "potato");
-		
+		toCompare = new Ingredient("ImpossibleInDataBase", "AbraCadaBra");
+		Ingredient ingredient2 = emptyIngredient();
+		ingredient2.setId(ID);
+		ingredient2.setName(NAME);
+
 		assertAll(
-				() -> assertEquals(id, toCompare.getId(), "equals1"),
-				() -> assertEquals(name, toCompare.getName(), "equals2"),
-				() -> assertEquals(ingredient, toCompare, "equals3"),
-				() -> assertEquals(ingredient2, toCompare, "equals4")
+				() -> assertEquals(ID, toCompare.getId(), "Equals 1"),
+				() -> assertEquals(NAME, toCompare.getName(), "Equals 2"),
+				() -> assertEquals(ingredient, toCompare, "Equals 3"),
+				() -> assertTrue(ingredient2.equals(toCompare), "True 1")
 				);
 	}
-	
+
 	@Test
 	@DisplayName("Getters and Setters IngredientJson")
 	void getteresSettersIngredientJsonTest() {
-		IngredientJson toCompare = new IngredientJson("ascdvfbgnhjm2345678", "potato");
-		
+		toCompareJson = new IngredientJson("ImpossibleInDataBase", "AbraCadaBra");
+		IngredientJson ingredientJson2 = emptyIngredientJson();
+		ingredientJson2.setId(ID);
+		ingredientJson2.setName(NAME);
+
 		assertAll(
-				() -> assertEquals(id, toCompare.getId(), "equals1"),
-				() -> assertEquals(name, toCompare.getName(), "equals2"),
-				() -> assertEquals(ingredientJson, toCompare, "equals3"),
-				() -> assertEquals(ingredientJson2, toCompare, "equals3")
+				() -> assertEquals(ID, toCompareJson.getId(), "Equals 1"),
+				() -> assertEquals(NAME, toCompareJson.getName(), "Equals 2"),
+				() -> assertEquals(ingredientJson, toCompareJson, "Equals 3"),
+				() -> assertTrue(ingredientJson2.equals(toCompareJson), "True 1")
+				);
+	}
+
+	@Test
+	@DisplayName("Ingredient to Json")
+	void test_IngredientToJson() {
+		toCompareJson = ingredient.toJson();
+
+		assertAll(
+				() -> assertEquals(ingredientJson, toCompareJson, "Equals 1"),
+				() -> assertTrue(ingredientJson.equals(toCompareJson), "True 1")
+				);
+	}
+
+	@Test
+	@DisplayName("Json to Ingredient")
+	void test_JsonToIngredient() {
+		toCompare = ingredientJson.toIngredient();
+
+		assertAll(
+				() -> assertEquals(ingredient, toCompare, "Equals 1"),
+				() -> assertTrue(ingredient.equals(toCompare), "True 1")
 				);
 	}
 
