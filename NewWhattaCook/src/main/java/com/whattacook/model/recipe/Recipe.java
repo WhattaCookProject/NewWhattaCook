@@ -1,7 +1,7 @@
 package com.whattacook.model.recipe;
 
 import java.util.Objects;
-import java.util.Set;
+import java.util.SortedSet;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -17,23 +17,21 @@ public class Recipe {
 	private String title;
 	private String instructions;
 	@DBRef
-	private Set<Ingredient> ingredientIds;
+	private SortedSet<Ingredient> ingredients;
 	
 	public Recipe() {}
 
-	public Recipe(String id, String title, String instructions, Set<Ingredient> ingredientIds) {
+	public Recipe(String id, String title, String instructions, SortedSet<Ingredient> ingredients) {
 		this.id = id;
 		this.title = title;
 		this.instructions = instructions;
-		this.ingredientIds = ingredientIds;
+		this.ingredients = ingredients;
 	}
 
-	public Recipe(String id, String title, String instructions) {
-		this.id = id;
-		this.title = title;
-		this.instructions = instructions;
+	public RecipeJson toJson() {
+		return RecipeJson.from(this);
 	}
-
+	
 	public String getId() {
 		return id;
 	}
@@ -58,23 +56,23 @@ public class Recipe {
 		this.instructions = instructions;
 	}
 
-	public Set<Ingredient> getIngredientIds() {
-		return ingredientIds;
+	public SortedSet<Ingredient> getIngredients() {
+		return ingredients;
 	}
 
-	public void setIngredientIds(Set<Ingredient> ingredientIds) {
-		this.ingredientIds = ingredientIds;
+	public void setIngredients(SortedSet<Ingredient> ingredients) {
+		this.ingredients = ingredients;
 	}
 
 	@Override
 	public String toString() {
 		return String.format("Recipe : {id : %s, title : %s, instructions : %s, ingredientIds : %s}", 
-				id, title, instructions, ingredientIds);
+				id, title, instructions, ingredients);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, instructions, title);
+		return Objects.hash(id, title, instructions, ingredients);
 	}
 
 	@Override
@@ -89,8 +87,9 @@ public class Recipe {
 			return false;
 		}
 		Recipe other = (Recipe) obj;
-		return Objects.equals(id, other.id) && Objects.equals(instructions, other.instructions)
-				&& Objects.equals(title, other.title);
+		return Objects.equals(id, other.id) && Objects.equals(title, other.title)
+				 && Objects.equals(instructions, other.instructions)
+				 && Objects.equals(ingredients, other.ingredients);
 	}
 	
 }
