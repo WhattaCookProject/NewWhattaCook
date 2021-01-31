@@ -37,14 +37,14 @@ public class ControllerAdvice extends DefaultResponseErrorHandler {
 	}
 	
 	@ExceptionHandler(IngredientExceptions.class)
-	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+	@ResponseStatus(value = HttpStatus.NOT_FOUND)
 	@ResponseBody
 	public String ingredientRequest() {
 		return "Sorry, someone forgot the shopping list in the fridge";
 	}
 	
 	@ExceptionHandler(RecipeExceptions.class)
-	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+	@ResponseStatus(value = HttpStatus.NOT_FOUND)
 	@ResponseBody
 	public String recipeRequest() {
 		return "Sorry, we believe that the recipes are being prepared";
