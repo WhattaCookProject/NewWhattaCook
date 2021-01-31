@@ -56,6 +56,10 @@ public class RecipeJson {
 		
 		return recipe;
 	}
+	
+	public static RecipeJson ERROR(String msg) {
+		return new RecipeJson("ERROR", msg, "ERROR", null);
+	}
 
 	public String getId() {
 		return id;

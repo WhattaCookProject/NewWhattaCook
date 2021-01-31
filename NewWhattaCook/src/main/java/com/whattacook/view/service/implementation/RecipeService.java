@@ -1,5 +1,7 @@
 package com.whattacook.view.service.implementation;
 
+import static com.whattacook.model.recipe.RecipeJson.ERROR;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,7 @@ public class RecipeService implements RecipeDetailService {
 			response = component.findAllRecipe();
 			
 		} catch (Exception e) {
-			response = Flux.error(e);
+			response = Flux.just(ERROR(e.getMessage()));
 		}
 		
 		return response;
@@ -41,7 +43,8 @@ public class RecipeService implements RecipeDetailService {
 			
 			
 		} catch (Exception e) {
-			response = Mono.error(e);
+			response = Mono.just(ResponseEntity.status(303)
+					.header("ERROR", e.getMessage()).build());
 		}
 		
 		return response;
@@ -56,7 +59,8 @@ public class RecipeService implements RecipeDetailService {
 			
 			
 		} catch (Exception e) {
-			response = Mono.error(e);
+			response = Mono.just(ResponseEntity.status(303)
+					.header("ERROR", e.getMessage()).build());
 		}
 		
 		return response;
@@ -71,7 +75,8 @@ public class RecipeService implements RecipeDetailService {
 			
 			
 		} catch (Exception e) {
-			response = Mono.error(e);
+			response = Mono.just(ResponseEntity.status(303)
+					.header("ERROR", e.getMessage()).build());
 		}
 		
 		return response;
@@ -87,7 +92,8 @@ public class RecipeService implements RecipeDetailService {
 			
 			
 		} catch (Exception e) {
-			response = Mono.error(e);
+			response = Mono.just(ResponseEntity.status(303)
+					.header("ERROR", e.getMessage()).build());
 		}
 		
 		return response;
