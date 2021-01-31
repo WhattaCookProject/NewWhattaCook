@@ -47,7 +47,7 @@ class IngredientComponent {
 	Flux<IngredientJson> findAllIngredients() throws IngredientExceptions {
 		return Flux.from(manager.findAll())
 				.map(Ingredient::toJson)
-				.defaultIfEmpty(IngredientJson.error("Sorry, there's nothing to cook"));
+				.switchIfEmpty(Flux.error(throwsUp("Sorry, there's nothing to cook")));
 				
 	}
 	
