@@ -1,5 +1,7 @@
 package com.whattacook.view.service.implementation;
 
+import static com.whattacook.model.ingredient.IngredientJson.ERROR;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,7 +31,7 @@ public class IngredientService implements IngredientDetailService {
 			response = component.findAllIngredients();
 			
 		} catch (Exception e) {
-			response = Flux.just(IngredientJson.error(e.getMessage()));
+			response = Flux.just(ERROR(e.getMessage()));
 		}
 		
 		return response;

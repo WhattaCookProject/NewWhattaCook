@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.whattacook.model.recipe.Recipe;
+import com.whattacook.model.recipe.RecipeJson;
 import com.whattacook.view.service.implementation.RecipeService;
 
 import reactor.core.publisher.Flux;
@@ -24,7 +24,7 @@ public class RecipeController {
 
 	@GetMapping("/all")
 	@ResponseStatus(HttpStatus.OK)
-	public Flux<Recipe> showAllRecipes() {
+	public Flux<RecipeJson> showAllRecipes() {
 		return service.showAllRecipes();
 	}
 

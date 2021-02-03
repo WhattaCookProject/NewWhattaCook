@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.whattacook.model.recipe.Recipe;
+import com.whattacook.model.recipe.RecipeJson;
 import com.whattacook.model.recipe.RecipeManager;
 
 import reactor.core.publisher.Flux;
@@ -16,8 +17,9 @@ class RecipeComponent {
 	@Autowired
 	private RecipeManager manager;
 
-	Flux<Recipe> findAllRecipe() {
+	Flux<RecipeJson> findAllRecipe() {
 		return manager.findAll()
+				.map(Recipe::toJson)
 				.switchIfEmpty(Flux.error(throwsUp("Sorry, there's nothing to cook")));
 	}
 

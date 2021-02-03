@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -148,7 +149,8 @@ class IngredientManagerTest {
 	@Order(11)
 	@DisplayName("Find All")
 	final void testFindAll() {
-		SortedSet<Ingredient> findAll = new TreeSet<>(manager.findAll().collectSortedList().block());
+		SortedSet<Ingredient> findAll = manager.findAll()
+				.collect(Collectors.toCollection(() -> new TreeSet<>())).block();
 		ingredientSet.add(ingredient);
 		assertEquals(ingredientSet, findAll);
 		
