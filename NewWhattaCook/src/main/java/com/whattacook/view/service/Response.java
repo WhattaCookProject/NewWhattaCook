@@ -1,4 +1,4 @@
-package com.whattacook.view;
+package com.whattacook.view.service;
 
 import org.springframework.http.ResponseEntity;
 
