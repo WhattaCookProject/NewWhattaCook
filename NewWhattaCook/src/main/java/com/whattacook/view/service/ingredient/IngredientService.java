@@ -1,14 +1,14 @@
-package com.whattacook.view.service;
+package com.whattacook.view.service.ingredient;
 
 import static com.whattacook.model.ingredient.IngredientJson.ERROR;
-import static com.whattacook.view.Response.ingredienteError303;
+import static com.whattacook.view.service.Response.ingredienteError303;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.whattacook.model.ingredient.IngredientJson;
-import com.whattacook.view.Response;
+import com.whattacook.view.service.Response;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
