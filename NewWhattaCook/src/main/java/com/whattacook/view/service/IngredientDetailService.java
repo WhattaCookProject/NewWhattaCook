@@ -1,8 +1,5 @@
 package com.whattacook.view.service;
 
-import java.util.HashMap;
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 
 import com.whattacook.model.ingredient.IngredientJson;
@@ -26,8 +23,5 @@ public interface IngredientDetailService {
 	
 	//DELETE
 	public Mono<ResponseEntity<Void>> deleteIngredient(IngredientJson ingredient);
-
-	//Returns HashMap with recipe id & times that is repeated
-	Flux<ResponseEntity<HashMap<Integer, Object>>> recipeCounter(List<String> listIngredientId);
 
 }
