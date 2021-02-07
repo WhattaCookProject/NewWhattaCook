@@ -1,11 +1,11 @@
-package com.whattacook.view.service;
+package com.whattacook.view.service.recipe;
 
 import static com.whattacook.util.exceptions.RecipeExceptions.throwsUp;
-import static com.whattacook.view.Response.recipeError303;
-import static com.whattacook.view.Response.recipeError303NotFound;
-import static com.whattacook.view.Response.voidError303;
-import static com.whattacook.view.Response.voidError303NotFound;
-import static com.whattacook.view.service.RecipeServiceValidation.updateByJson;
+import static com.whattacook.view.service.Response.recipeError303;
+import static com.whattacook.view.service.Response.recipeError303NotFound;
+import static com.whattacook.view.service.Response.voidError303;
+import static com.whattacook.view.service.Response.voidError303NotFound;
+import static com.whattacook.view.service.recipe.RecipeServiceValidation.updateByJson;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

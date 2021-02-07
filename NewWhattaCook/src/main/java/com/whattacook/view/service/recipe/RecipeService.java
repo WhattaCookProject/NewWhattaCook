@@ -1,8 +1,8 @@
-package com.whattacook.view.service;
+package com.whattacook.view.service.recipe;
 
 import static com.whattacook.model.recipe.RecipeJson.ERROR;
-import static com.whattacook.view.Response.recipeError303;
-import static com.whattacook.view.Response.voidError303;
+import static com.whattacook.view.service.Response.recipeError303;
+import static com.whattacook.view.service.Response.voidError303;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

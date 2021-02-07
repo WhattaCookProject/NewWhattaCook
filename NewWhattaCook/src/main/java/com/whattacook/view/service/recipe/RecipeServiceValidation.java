@@ -1,4 +1,4 @@
-package com.whattacook.view.service;
+package com.whattacook.view.service.recipe;
 
 import static com.whattacook.util.Valid.isNullOrEmpty;
 import static com.whattacook.util.Valid.notNullOrEmpty;
