@@ -1,16 +1,14 @@
-package com.whattacook.view.service.implementation;
+package com.whattacook.view.service;
 
 import static com.whattacook.model.ingredient.IngredientJson.ERROR;
-
-import java.util.HashMap;
-import java.util.List;
+import static com.whattacook.view.Response.ingredienteError303;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.whattacook.model.ingredient.IngredientJson;
-import com.whattacook.view.service.IngredientDetailService;
+import com.whattacook.view.Response;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -19,7 +17,7 @@ import reactor.core.publisher.Mono;
 public class IngredientService implements IngredientDetailService {
 	
 	@Autowired
-	private IngredientComponent component;
+	private IngredientServiceComponent component;
 
 	@Override
 	public Flux<IngredientJson> showAllIngredients() {
@@ -47,8 +45,7 @@ public class IngredientService implements IngredientDetailService {
 			response = component.findIngredientByJson(ingredientJson);
 			
 		} catch (Exception e) {
-			response = Mono.just(ResponseEntity.status(303)
-					.header("ERROR", e.getMessage()).build());
+			response = ingredienteError303(e);
 		}
 		
 		return response;
@@ -61,15 +58,14 @@ public class IngredientService implements IngredientDetailService {
 		
 		try {
 			
-			IngredientToSaveValidation.verifyIsAble(ingredientJson);
+			IngredientServiceValidation.toSave(ingredientJson);
 			
 			component.ifNameIsAlredyRegisteredThrowsException(ingredientJson);
 			
 			response = component.saveNewIngredient(ingredientJson);
 			
 		} catch (Exception e) {
-			response = Mono.just(ResponseEntity.status(303)
-					.header("ERROR", e.getMessage()).build());
+			response = ingredienteError303(e);
 		}
 		
 		return response;
@@ -83,14 +79,13 @@ public class IngredientService implements IngredientDetailService {
 		
 		try {
 			
-			IngredientToUpdateValidation.verifyIsAble(ingredientJson);
+			IngredientServiceValidation.toUpdate(ingredientJson);
 			
 			response = component.updateIngredient(ingredientJson);
 			
 			
 		} catch (Exception e) {
-			response = Mono.just(ResponseEntity.status(303)
-					.header("ERROR", e.getMessage()).build());
+			response = ingredienteError303(e);
 		}
 		
 		return response;
@@ -107,25 +102,7 @@ public class IngredientService implements IngredientDetailService {
 			response = component.deleteIngredient(ingredientJson);
 			
 		} catch (Exception e) {
-			response = Mono.just(ResponseEntity.status(303)
-					.header("ERROR", e.getMessage()).build());
-		}
-		
-		return response;
-	}
-
-	@Override
-	public Flux<ResponseEntity<HashMap<Integer, Object>>> recipeCounter(List<String> listIngredientId) {
-
-		Flux<ResponseEntity<HashMap<Integer, Object>>> response = Flux.empty();
-		
-		try {
-			
-			
-			
-		} catch (Exception e) {
-			response = Flux.just(ResponseEntity.status(303)
-					.header("ERROR", e.getMessage()).build());
+			response = Response.voidError303(e);
 		}
 		
 		return response;

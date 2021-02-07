@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.whattacook.model.ingredient.IngredientJson;
-import com.whattacook.view.service.implementation.IngredientService;
+import com.whattacook.view.service.IngredientService;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
