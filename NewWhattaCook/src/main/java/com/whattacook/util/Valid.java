@@ -1,5 +1,7 @@
 package com.whattacook.util;
 
+import java.util.SortedSet;
+
 import org.springframework.util.StringUtils;
 
 public class Valid {
@@ -18,20 +20,20 @@ public class Valid {
 		return String.format("Something went wrong trying to %s : ", input);
 	}
 
+	public static boolean isNullOrEmpty(SortedSet<?> something) {
+		return something == null || something.isEmpty();
+	}
+	
+	public static boolean notNullOrEmpty(SortedSet<?> something) {
+		return something != null && !something.isEmpty();
+	}
+	
 	public static boolean isNullOrEmpty(String something) {
 		return !StringUtils.hasLength(something);
 	}
 	
-	public static boolean isNullOrLessThanOne(Number something) {
-		return something == null || something.longValue() <= 0;
-	}
-	
 	public static boolean notNullOrEmpty(String something) {
 		return StringUtils.hasLength(something);
-	}
-	
-	public static boolean notNullOrLessThanOne(Number something) {
-		return something != null && something.longValue() > 0;
 	}
 	
 
