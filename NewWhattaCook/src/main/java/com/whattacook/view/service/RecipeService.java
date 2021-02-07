@@ -1,13 +1,14 @@
-package com.whattacook.view.service.implementation;
+package com.whattacook.view.service;
 
 import static com.whattacook.model.recipe.RecipeJson.ERROR;
+import static com.whattacook.view.Response.recipeError303;
+import static com.whattacook.view.Response.voidError303;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.whattacook.model.recipe.RecipeJson;
-import com.whattacook.view.service.RecipeDetailService;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -16,7 +17,7 @@ import reactor.core.publisher.Mono;
 public class RecipeService implements RecipeDetailService {
 	
 	@Autowired
-	private RecipeComponent component;
+	private RecipeServiceComponent component;
 
 	@Override
 	public Flux<RecipeJson> showAllRecipes() {
@@ -41,10 +42,10 @@ public class RecipeService implements RecipeDetailService {
 		
 		try {
 			
+			response = component.findRecipeById(recipeJson);
 			
 		} catch (Exception e) {
-			response = Mono.just(ResponseEntity.status(303)
-					.header("ERROR", e.getMessage()).build());
+			response = recipeError303(e);
 		}
 		
 		return response;
@@ -57,10 +58,14 @@ public class RecipeService implements RecipeDetailService {
 		
 		try {
 			
+			RecipeServiceValidation.toSave(recipeJson);
+			
+			component.ifTitleIsAlredyRegisteredThrowsException(recipeJson);
+			
+			response = component.saveNewRecipe(recipeJson);
 			
 		} catch (Exception e) {
-			response = Mono.just(ResponseEntity.status(303)
-					.header("ERROR", e.getMessage()).build());
+			response = recipeError303(e);
 		}
 		
 		return response;
@@ -73,10 +78,13 @@ public class RecipeService implements RecipeDetailService {
 		
 		try {
 			
+			RecipeServiceValidation.toUpdate(recipeJson);
+			
+			response = component.updateRecipe(recipeJson);
+			
 			
 		} catch (Exception e) {
-			response = Mono.just(ResponseEntity.status(303)
-					.header("ERROR", e.getMessage()).build());
+			response = recipeError303(e);
 		}
 		
 		return response;
@@ -90,10 +98,10 @@ public class RecipeService implements RecipeDetailService {
 		
 		try {
 			
+			response = component.deleteRecipe(recipeJson);
 			
 		} catch (Exception e) {
-			response = Mono.just(ResponseEntity.status(303)
-					.header("ERROR", e.getMessage()).build());
+			response = voidError303(e);
 		}
 		
 		return response;
